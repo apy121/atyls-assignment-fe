@@ -19,7 +19,7 @@ const ProductList = ({ pageLimit }) => {
 
   useEffect(() => {
     fetchProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageLimit]);
 
   const fetchProducts = async () => {
@@ -54,11 +54,15 @@ const ProductList = ({ pageLimit }) => {
   };
 
   const applyFilters = () => {
-    let filtered = products.filter((product) =>
-      product.average_rating >= filters.minRating &&
-      product.product_price >= filters.minPrice &&
-      (!filters.maxWeight || parseFloat(product.weight) <= parseFloat(filters.maxWeight)) &&
-      product.product_title.toLowerCase().includes(filters.searchTitle.toLowerCase())
+    let filtered = products.filter(
+      (product) =>
+        product.average_rating >= filters.minRating &&
+        product.product_price >= filters.minPrice &&
+        (!filters.maxWeight ||
+          parseFloat(product.weight) <= parseFloat(filters.maxWeight)) &&
+        product.product_title
+          .toLowerCase()
+          .includes(filters.searchTitle.toLowerCase())
     );
 
     setFilteredProducts(filtered);
@@ -68,7 +72,10 @@ const ProductList = ({ pageLimit }) => {
     <div className="container mt-5 p-3">
       {loading ? (
         <div className="text-center mt-5">
-          <h3>Fetching results, please wait for approximately {pageLimit*(16/60)} minutes, </h3>
+          <h3>
+            Fetching results, please wait for approximately{" "}
+            {(pageLimit * (15 / 60)).toFixed(2)} minutes.
+          </h3>
           <div className="spinner-border text-primary mt-3" role="status"></div>
         </div>
       ) : error ? (
@@ -76,7 +83,10 @@ const ProductList = ({ pageLimit }) => {
       ) : (
         <>
           {filtersVisible && (
-            <div className="border p-3 mb-4 mt-4 rounded shadow-sm bg-light" style={{ top: "20px", zIndex: 1000 }}>
+            <div
+              className="border p-3 mb-4 mt-4 rounded shadow-sm bg-light"
+              style={{ top: "30px", zIndex: 1000 }}
+            >
               <h5>Filter Products</h5>
               <div className="row g-3">
                 <div className="col-md-3">
@@ -85,7 +95,9 @@ const ProductList = ({ pageLimit }) => {
                     type="number"
                     className="form-control"
                     value={filters.minRating}
-                    onChange={(e) => setFilters({ ...filters, minRating: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, minRating: e.target.value })
+                    }
                   />
                 </div>
 
@@ -95,7 +107,9 @@ const ProductList = ({ pageLimit }) => {
                     type="number"
                     className="form-control"
                     value={filters.minPrice}
-                    onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, minPrice: e.target.value })
+                    }
                   />
                 </div>
 
@@ -105,7 +119,9 @@ const ProductList = ({ pageLimit }) => {
                     type="text"
                     className="form-control"
                     value={filters.maxWeight}
-                    onChange={(e) => setFilters({ ...filters, maxWeight: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, maxWeight: e.target.value })
+                    }
                   />
                 </div>
 
@@ -115,12 +131,17 @@ const ProductList = ({ pageLimit }) => {
                     type="text"
                     className="form-control"
                     value={filters.searchTitle}
-                    onChange={(e) => setFilters({ ...filters, searchTitle: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, searchTitle: e.target.value })
+                    }
                   />
                 </div>
 
                 <div className="col-12">
-                  <button className="btn btn-primary mt-2" onClick={applyFilters}>
+                  <button
+                    className="btn btn-primary mt-2"
+                    onClick={applyFilters}
+                  >
                     Apply Filters
                   </button>
                 </div>
@@ -128,9 +149,12 @@ const ProductList = ({ pageLimit }) => {
             </div>
           )}
 
-          <h1>Total Products Count: ${filteredProducts.length}</h1>
+          <h1>Total Products Count: {filteredProducts.length}</h1>
 
-          <div className="row mt-8 overflow-auto" style={{ maxHeight: "80vh", paddingBottom: "20px" }}>
+          <div
+            className="row mt-8 overflow-auto"
+            style={{ maxHeight: "80vh", top: "100px" }}
+          >
             {filteredProducts.map((product, index) => (
               <div key={index} className="col-md-4">
                 <div className="card mb-3 shadow">
@@ -143,9 +167,11 @@ const ProductList = ({ pageLimit }) => {
                     <h5 className="card-title">{product.product_title}</h5>
                     <p className="card-text">
                       <strong>Price:</strong> ₹{product.product_price} <br />
-                      <strong>Discount:</strong> {product.discount_percentage}% <br />
+                      <strong>Discount:</strong> {product.discount_percentage}%{" "}
+                      <br />
                       <strong>Weight:</strong> {product.weight} <br />
-                      <strong>Rating:</strong> {product.average_rating} ⭐ ({product.total_ratings} reviews)
+                      <strong>Rating:</strong> {product.average_rating} ⭐ (
+                      {product.total_ratings} reviews)
                     </p>
                   </div>
                 </div>
