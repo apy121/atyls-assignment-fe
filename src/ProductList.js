@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CSVExporter from "./CSVExporter"; // Assuming you've placed CSVExporter in the same directory
 
 const API_URL = "https://atyls-assignment-be.onrender.com/scrape/";
 const API_KEY = "default_secret_token";
@@ -47,7 +48,7 @@ const ProductList = ({ pageLimit }) => {
         setError("Failed to fetch products.");
       }
     } catch (error) {
-      setError("Error fetching products.");
+      setError("Error fetching products: " + error.message);
     }
 
     setLoading(false);
@@ -144,6 +145,8 @@ const ProductList = ({ pageLimit }) => {
                   >
                     Apply Filters
                   </button>
+                  {/* Add CSV download button here */}
+                  <CSVExporter data={products} />
                 </div>
               </div>
             </div>
